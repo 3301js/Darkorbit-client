@@ -32,7 +32,7 @@ Open source client for cross-platform Darkorbit (Windows, Mac and Linux).
 
 Download
 -------
-🔽 The latest release is always available here: https://github.com/kaiserdj/Darkorbit-client/releases/latest
+🔽 The latest release is always available here: https://github.com/Darkorbit-Private-Server/Darkorbit-Client/releases/latest
  
 ## Development
 Building Darkorbit client is really simple
@@ -69,39 +69,9 @@ Install the dependencies:
 
 ## Contributing
 
-For bugs, questions, and discussions please use the [Github Issues](https://github.com/kaiserdj/Darkorbit-client/issues)
+For bugs, questions, and discussions please use the [Github Issues](https://github.com/Darkorbit-Private-Server/Darkorbit-Client/issues)
 
 Pull requests are welcome! If you see something you'd like to add, please do. For drastic changes, please open an issue first.
-
-## Donating
-
-You can support the maintainer of this project through the link below
-
-[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/kaiserdj/)
-
-## Contributors ✨
-
-Thanks go to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="http://kaiserdj.github.io"><img src="https://avatars2.githubusercontent.com/u/5487950?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kaiserdj</b></sub></a><br /><a href="https://github.com/kaiserdj/Darkorbit-client/commits?author=kaiserdj" title="Code">💻</a> <a href="https://github.com/kaiserdj/Darkorbit-client/commits?author=kaiserdj" title="Tests">⚠️</a> <a href="#projectManagement-kaiserdj" title="Project Management">📆</a> <a href="#tool-kaiserdj" title="Tools">🔧</a></td>
-    <td align="center"><a href="https://github.com/ODAKAB"><img src="https://avatars.githubusercontent.com/u/49538323?v=4?s=100" width="100px;" alt=""/><br /><sub><b>odakab</b></sub></a><br /><a href="#financial-odakab" title="Financial">💵</a></td>
-    <td align="center"><a href="https://github.com/QR4SH3D"><img src="https://avatars.githubusercontent.com/u/69433658?v=4?s=100" width="100px;" alt=""/><br /><sub><b>OneManArmy</b></sub></a><br /><a href="#financial-QR4SH3D" title="Financial">💵</a></td>
-    <td align="center"><a href="https://github.com/HeizerGe5"><img src="https://avatars.githubusercontent.com/u/71152480?v=4?s=100" width="100px;" alt=""/><br /><sub><b>HeizerGe5</b></sub></a><br /><a href="#financial-HeizerGe5" title="Financial">💵</a></td>
-    <td align="center"><a href="https://github.com/SenttX1"><img src="https://avatars.githubusercontent.com/u/86185939?v=4?s=100" width="100px;" alt=""/><br /><sub><b>SenttX1</b></sub></a><br /><a href="#financial-SenttX1" title="Financial">💵</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 ## Story
 

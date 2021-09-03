@@ -59,8 +59,8 @@
       {
         "provider": "github",
         "releaseType": "release",
-        "owner": "kaiserdj",
-        "repo": "Darkorbit-client"
+        "owner": "Darkorbit-Private-Server",
+        "repo": "Darkorbit-Client"
       }
     ]
   }
