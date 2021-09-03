@@ -1,9 +1,19 @@
-const { BrowserWindow, nativeTheme, Tray, Menu } = require("electron");
+const {
+    BrowserWindow,
+    nativeTheme,
+    Tray,
+    Menu,
+    ipcRenderer
+} = require("electron");
 const settings = require("electron-settings");
 const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
+const {
+    hideBin
+} = require('yargs/helpers');
 const contextmenu = require("electron-context-menu");
-const { openProcessManager } = require('electron-process-manager');
+const {
+    openProcessManager
+} = require('electron-process-manager');
 const axios = require("axios");
 
 const defaultSettings = require("./defaultSettings.json");
@@ -52,7 +62,13 @@ function checkSettings() {
     const merge = (left = {}, right = {}) =>
         Object.entries(right)
         .reduce((acc, [k, v]) =>
-            isObject(v) && isObject(left[k]) ? { ...acc, [k]: merge(left[k], v) } : { ...acc, [k]: v }, left
+            isObject(v) && isObject(left[k]) ? {
+                ...acc,
+                [k]: merge(left[k], v)
+            } : {
+                ...acc,
+                [k]: v
+            }, left
         )
 
     settings.setSync(merge(defaultSettings, backup))
@@ -84,7 +100,9 @@ function tray(client) {
                     await win.webContents.session.clearAuthCache();
                 })
 
-                client.core.app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) });
+                client.core.app.relaunch({
+                    args: process.argv.slice(1).concat(['--relaunch'])
+                });
                 client.core.app.exit(0);
             }
         },
@@ -151,7 +169,16 @@ function contextMenu(dev) {
                 visible: browserWindow.isFullScreen(),
                 click: (menu, win) => win.setFullScreen(false)
             },
-            { type: 'separator' },
+            {
+                label: 'clear Cache',
+                icon: `${__dirname}/contextMenu/fullscreen_exit${nativeTheme.shouldUseDarkColors ? "" : "_dark"}.png`,
+                click: (menu, win) =>
+                    win.webContents.emit('clearCache')
+
+            },
+            {
+                type: 'separator'
+            },
             {
                 role: 'resetzoom',
                 label: 'Normal zoom',
@@ -256,7 +283,9 @@ async function get(url) {
 
 async function getBase64(url) {
     return new Promise((resolve, reject) => {
-        axios.get(url, { responseType: 'arraybuffer' })
+        axios.get(url, {
+                responseType: 'arraybuffer'
+            })
             .then(response => resolve(Buffer.from(response.data, 'binary').toString('base64')))
             .catch(error => reject(error));
     });

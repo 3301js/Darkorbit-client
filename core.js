@@ -37,6 +37,8 @@ class Core {
             }
         }
 
+        let test = this.app.getPath('appData');
+
         this.app.commandLine.appendSwitch('ppapi-flash-path', this.ppapi_flash_path);
     }
 }

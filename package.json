@@ -42,12 +42,14 @@
     "appId": "com.DarkOrbitClient.Kaiserdj",
     "productName": "DarkOrbit Client",
     "extraResources": "./flash/**",
+    "target": "NSIS",
     "directories": {
       "buildResources": "assets",
       "output": "dist"
     },
     "mac": {
-      "category": "public.app-category.games"
+      "category": "public.app-category.games",
+      "target": "dmg"
     },
     "linux": {
       "target": [

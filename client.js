@@ -1,16 +1,22 @@
-const { BrowserWindow, ipcMain, dialog } = require('electron');
+const {
+    BrowserWindow,
+    ipcMain,
+    dialog
+} = require('electron');
 const settings = require("electron-settings");
 const fs = require("fs");
 const path = require("path");
 
 const tools = require("./tools");
-const update = require("./update");
+//const update = require("./update");
 const useragent = require("./useragent");
 const Settings = require("./settings/settings");
 const Credentials = require("./credentials/credentials");
 const DarkDev = require("./darkDev/darkDev");
 const Api = require("./api");
 const defaultSettings = require("./defaultSettings.json");
+
+const mainLink = `http://darkera.coreunit.net/`;
 
 class Client {
     constructor(core) {
@@ -46,9 +52,9 @@ class Client {
             this.darkDev;
             this.api;
 
-            if (await update()) {
-                return this;
-            }
+            //if (await update()) {
+            //    return this;
+            //}
 
             if (this.arg.dev) {
                 this.darkDev = new DarkDev(this);
@@ -146,31 +152,51 @@ class Client {
                 let baseUrl = new URL(this.arg.dosid).origin;
 
                 if (sid !== null && baseUrl !== null) {
-                    let cookie = { url: baseUrl, name: 'dosid', value: sid[2] };
+                    let cookie = {
+                        url: baseUrl,
+                        name: 'dosid',
+                        value: sid[2]
+                    };
                     window.webContents.session.cookies.set(cookie);
-                    window.loadURL(`${baseUrl}/indexInternal.es?action=internalStart`, { userAgent: this.useragent });
+                    window.loadURL(`${baseUrl}/indexInternal.es?action=internalStart`, {
+                        userAgent: this.useragent
+                    });
                 }
             } else {
                 if (this.arg.url) {
                     let baseUrl = new URL(this.arg.url).origin;
-                    let cookie = { url: baseUrl, name: 'dosid', value: this.arg.dosid };
+                    let cookie = {
+                        url: baseUrl,
+                        name: 'dosid',
+                        value: this.arg.dosid
+                    };
                     window.webContents.session.cookies.set(cookie);
-                    window.loadURL(this.arg.url, { userAgent: this.useragent });
+                    window.loadURL(this.arg.url, {
+                        userAgent: this.useragent
+                    });
 
                     delete this.arg.url
                 } else {
                     dialog.showErrorBox("Load SID", `You also need the url parameter to be able to load the sid`);
-                    window.loadURL(`https://www.darkorbit.com/`, { userAgent: this.useragent });
+                    window.loadURL(mainLink, {
+                        userAgent: this.useragent
+                    });
                 }
             }
 
             delete this.arg.dosid;
         } else if (this.arg.url) {
-            window.loadURL(this.arg.url, { userAgent: this.useragent });
+            window.loadURL(this.arg.url, {
+                userAgent: this.useragent
+            });
         } else if (url) {
-            window.loadURL(url, { userAgent: this.useragent });
+            window.loadURL(url, {
+                userAgent: this.useragent
+            });
         } else {
-            window.loadURL(`https://www.darkorbit.com/`, { userAgent: this.useragent });
+            window.loadURL(mainLink, {
+                userAgent: this.useragent
+            });
         }
 
         tools.settingsWindow(window, type);
@@ -204,6 +230,10 @@ class Client {
             }
         })
 
+        window.webContents.on('clearCache', (event, message) => {
+            this.clearCache();
+        })
+
         window.on("close", (closeWin) => {
             if (this.arg.dev) {
                 closeWin.sender.webContents.debugger.detach();
@@ -215,36 +245,38 @@ class Client {
         })
 
         let client = this;
-        window.webContents.on('new-window', async function(e, url) {
+        window.webContents.on('new-window', async function (e, url) {
             if (type === "game" || type === "shop") {
                 return;
             }
             e.preventDefault();
-            if (new URL(url).search === "?action=internalMapRevolution") {
+            if (new URL(url).href.split("/")[3] === "map-revolution") {
+                //if (new URL(url).search === "?action=internalMapRevolution") {
                 client.createWindow("game", url)
-            } else if (new URL(url).host.split(".")[1] === "darkorbit") {
-                if (new URL(url).host.split(".")[0].search("board") !== -1 || new URL(url).search === "?action=portal.redirectToBoard") {
-                    client.createWindow("board", url)
-                } else if (new URL(url).search.split("&")[0] === "?action=internalPaymentProxy") {
-                    client.createWindow("shop", url);
-                } else {
-                    if (new URL(url).search.split("&")[0] === "?action=externalLogout") {
-                        if (settings.getSync().Settings.PreventCloseSessionWindow) {
-                            return window.loadURL(`https://www.darkorbit.com/`, { userAgent: this.useragent });
-                        } else {
-                            return window.close();
-                        }
-                    } else if (new URL(url).host.split(".")[1] === "darkorbit") {
-                        return window.loadURL(url, { userAgent: client.useragent });
-                    }
-                    client.createWindow("client", url);
-                }
-            } else if (new URL(url).host.split(".")[1] === "bpsecure") {
-                client.createWindow("config", url);
-            } else {
-                require('open')(url);
-                return;
             }
+            /*else if (new URL(url).host.split(".")[1] === "darkorbit") {
+                           if (new URL(url).host.split(".")[0].search("board") !== -1 || new URL(url).search === "?action=portal.redirectToBoard") {
+                               client.createWindow("board", url)
+                           } else if (new URL(url).search.split("&")[0] === "?action=internalPaymentProxy") {
+                               client.createWindow("shop", url);
+                           } else {
+                               if (new URL(url).search.split("&")[0] === "?action=externalLogout") {
+                                   if (settings.getSync().Settings.PreventCloseSessionWindow) {
+                                       return window.loadURL(mainLink, { userAgent: this.useragent });
+                                   } else {
+                                       return window.close();
+                                   }
+                               } else if (new URL(url).host.split(".")[1] === "darkorbit") {
+                                   return window.loadURL(url, { userAgent: client.useragent });
+                               }
+                               client.createWindow("client", url);
+                           }
+                       } else if (new URL(url).host.split(".")[1] === "bpsecure") {
+                           client.createWindow("config", url);
+                       } else {
+                           require('open')(url);
+                           return;
+                       }*/
         });
 
         return window;
@@ -275,7 +307,9 @@ class Client {
             }
 
             if (!customLoad.enable) {
-                win.webContents.debugger.sendCommand("Fetch.enable", { patterns: [] });
+                win.webContents.debugger.sendCommand("Fetch.enable", {
+                    patterns: []
+                });
                 win.webContents.debugger.removeAllListeners("message");
                 if (!statusDevTools) {
                     win.webContents.closeDevTools()
@@ -287,11 +321,15 @@ class Client {
 
             for (let id in customLoad.list) {
                 if (customLoad.list[id].enable) {
-                    patterns.push({ urlPattern: customLoad.list[id].match });
+                    patterns.push({
+                        urlPattern: customLoad.list[id].match
+                    });
                 }
             }
 
-            win.webContents.debugger.sendCommand("Fetch.enable", { patterns });
+            win.webContents.debugger.sendCommand("Fetch.enable", {
+                patterns
+            });
 
             win.webContents.debugger.removeAllListeners("message");
 
@@ -315,7 +353,9 @@ class Client {
                         let body;
 
                         if (customLoad.list[id].LocalFileEnable) {
-                            body = fs.readFileSync(path.normalize(customLoad.list[id].LocalFile), { encoding: "base64" });
+                            body = fs.readFileSync(path.normalize(customLoad.list[id].LocalFile), {
+                                encoding: "base64"
+                            });
                         } else {
                             body = await tools.getBase64(customLoad.list[id].actionUrl);
                         }
@@ -330,7 +370,9 @@ class Client {
                     }
                 }
                 dialog.showErrorBox("Injecting custom load", `Error when injecting custom load in the url: ${params.request.url}`);
-                win.webContents.debugger.sendCommand("Fetch.continueRequest", { requestId: params.requestId });
+                win.webContents.debugger.sendCommand("Fetch.continueRequest", {
+                    requestId: params.requestId
+                });
             })
         }
     }
@@ -381,6 +423,13 @@ class Client {
         }
         if (settings.getSync().autoClose) {
             let allWin = BrowserWindow.getAllWindows();
+
+            allWin.forEach(win => {
+                let session = win.webContents.session;
+
+                session.clearCache()
+            });
+
             if (allWin.length < 2) {
                 allWin.forEach((win) => {
                     win.destroy();
@@ -388,6 +437,18 @@ class Client {
                 this.core.app.quit();
             }
         }
+    }
+
+    clearCache() {
+        let allWin = BrowserWindow.getAllWindows();
+
+        allWin.forEach(win => {
+            let session = win.webContents.session;
+
+            session.clearCache()
+        });
+
+        console.log("Cache Cleared")
     }
 }
 
