@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kaiserdj/Darkorbit-client.git"
+    "url": "https://github.com/Darkorbit-Private-Server/Darkorbit-Client"
   },
   "scripts": {
     "start": "electron .",
