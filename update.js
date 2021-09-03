@@ -5,8 +5,8 @@ const ProgressBar = require('electron-progressbar');
 autoUpdater.autoDownload = false;
 autoUpdater.setFeedURL({
     "provider": 'github',
-    "owner": "kaiserdj",
-    "repo": "Darkorbit-client"
+    "owner": "Darkorbit-Private-Server",
+    "repo": "Darkorbit-Client"
 });
 
 let updater = false;
