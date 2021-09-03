@@ -49,8 +49,8 @@ class Client {
             this.tray = tools.tray(this);
             this.config = new Settings(this);
             this.credentials = new Credentials(this);
+            this.api = new Api();
             this.darkDev;
-            this.api;
 
             //if (await update()) {
             //    return this;
@@ -58,7 +58,6 @@ class Client {
 
             if (this.arg.dev) {
                 this.darkDev = new DarkDev(this);
-                this.api = new Api();
                 console.log("Settings:");
                 console.log(settings.getSync());
                 console.log("Arguments:");

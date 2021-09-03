@@ -1,6 +1,6 @@
 {
   "name": "darkorbit-client",
-  "version": "2.4.1",
+  "version": "2.5.1",
   "description": "Open source darkorbit client",
   "main": "index.js",
   "repository": {
@@ -10,12 +10,11 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --d",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder --publish always",
     "postinstall": "electron-builder install-app-deps",
     "build": "electron-builder --publish=always",
     "release": "electron-builder --publish always",
-    "test-build": "electron-builder"
+    "local-build": "electron-builder",
+    "pack": "electron-builder --dir"
   },
   "author": "Kaiserdj",
   "license": "ISC",
@@ -34,7 +33,7 @@
     "menubar": "^9.0.5",
     "open": "^8.2.1",
     "sweetalert2": "^11.0.18",
-    "ws": "^7.5.1",
+    "ws": "^7.5.2",
     "xml2js": "^0.4.23",
     "yargs": "^17.0.1"
   },
