@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 
 const tools = require("./tools");
-//const update = require("./update");
+const update = require("./update");
 const useragent = require("./useragent");
 const Settings = require("./settings/settings");
 const Credentials = require("./credentials/credentials");
@@ -52,9 +52,9 @@ class Client {
             this.api = new Api();
             this.darkDev;
 
-            //if (await update()) {
-            //    return this;
-            //}
+            if (await update()) {
+                return this;
+            }
 
             if (this.arg.dev) {
                 this.darkDev = new DarkDev(this);
