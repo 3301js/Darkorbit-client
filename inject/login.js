@@ -7,6 +7,7 @@ body {
 
 #autoLogin {
     background: #424242;
+    
     width: 100%;
     height: 54px;
     color: #ffffff;
@@ -23,7 +24,7 @@ body {
 require("./api").injectCss(style);
 
 if (document.getElementById("l-username") != undefined && document.getElementById("l-password") != undefined) {
-    document.getElementsByClassName("row")[1].insertAdjacentHTML('afterbegin', '<div align="center" style=""><input id="autoLogin" value="AUTOLOGIN" type="button"></div>');
+    document.getElementsByClassName("row")[1].insertAdjacentHTML('afterbegin', '<div align="center" class="input-field col s12" style=""><input id="autoLogin" value="AUTOLOGIN" type="button"></div>');
 }
 
 document.getElementById("autoLogin").addEventListener("click", () => {
