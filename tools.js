@@ -2,8 +2,7 @@ const {
     BrowserWindow,
     nativeTheme,
     Tray,
-    Menu,
-    ipcRenderer
+    Menu
 } = require("electron");
 const settings = require("electron-settings");
 const yargs = require('yargs/yargs');

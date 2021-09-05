@@ -28,12 +28,12 @@ function run() {
     let url = this.location.href;
 
     switch (true) {
-        case /https:\/\/www\.darkorbit\.[^./]*\//.test(url):
-        case /https:\/\/.*\.darkorbit\.com\/\?/.test(url):
-        case /https:\/\/.*\.darkorbit\.com\/index\.[^.\/]*\?action=externalHome&loginError=.{0,3}/.test(url):
+        case /http:\/\/darkera\.coreunit\.[^.\/]*\//.test(url):
+        //case /http:\/\/.*\.darkera\.coreunit\.net\/\?/.test(url):
+        //case /http:\/\/.*\.darkera\.coreunit\.net\/index\.[^.\/]*\?action=externalHome&loginError=.{0,3}/.test(url):
             require("./login");
             break;
-        case /.*\?action=internalMapRevolution.*/.test(url):
+        case /.*\/map-revolution/.test(url):
             api.getConfig().then((data) => {
                 if (data.Settings.PreventCloseGame) {
                     api.injectJs("bpCloseWindow = function() {}");

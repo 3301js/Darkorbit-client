@@ -1,4 +1,7 @@
-const { app, Menu } = require('electron');
+const {
+    app,
+    Menu
+} = require('electron');
 const path = require("path");
 const fs = require('fs');
 
@@ -12,7 +15,14 @@ class Core {
 
             this.ppapi();
 
-            Menu.setApplicationMenu(Menu.buildFromTemplate([{ label: "File", submenu: [{ role: "reload" }, { role: "close" }] }]));
+            Menu.setApplicationMenu(Menu.buildFromTemplate([{
+                label: "File",
+                submenu: [{
+                    role: "reload"
+                }, {
+                    role: "close"
+                }]
+            }]));
 
             await this.app.whenReady();
             this.appReady = true;
@@ -36,8 +46,6 @@ class Core {
                 this.ppapi_flash_path = path.join(app.getAppPath(), './flash/PepperFlashPlayer.plugin');
             }
         }
-
-        let test = this.app.getPath('appData');
 
         this.app.commandLine.appendSwitch('ppapi-flash-path', this.ppapi_flash_path);
     }

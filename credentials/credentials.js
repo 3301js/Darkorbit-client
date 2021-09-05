@@ -129,7 +129,7 @@ class Credentials {
 
             if (this.window) {
                 try {
-                    if (new URL(this.window.webContents.getURL()).origin === "https://www.darkorbit.com") {
+                    if (new URL(this.window.webContents.getURL()).origin === "http://darkera.coreunit.net") {
                         return this.window.webContents.send("login", [account.username, account.password]);
                     }
                 } catch (e) {
