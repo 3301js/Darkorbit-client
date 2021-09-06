@@ -37,7 +37,7 @@ ipcRenderer.on("login", (event, data) => {
     document.getElementById("l-password").value = data[1];
 
     if (document.querySelectorAll('iframe[title="reCAPTCHA"]').length != 0) {
-        alert("Por favor, complete el captcha");
+        alert("Please fill Captcha");
     } else {
         document.getElementsByClassName("btn-large grey darken-3 waves-effect waves-light col s12")[0].click();
     }
