@@ -18,6 +18,12 @@ const defaultSettings = require("./defaultSettings.json");
 
 const mainLink = `http://darkera.coreunit.net/`;
 
+const allowedLinks = [
+    "https://www.darkorbit.com/",
+    "https://discord.gg/RwytCms",
+    "https://github.com/Darkorbit-Private-Server/Darkorbit-Client/releases/download/v2.5.4/DarkOrbit-Client-Setup-2.5.4.exe"
+]
+
 class Client {
     constructor(core) {
         settings.configure({
@@ -244,6 +250,7 @@ class Client {
         })
 
         let client = this;
+        //prevent non allowed links or windows from opening
         window.webContents.on('new-window', async function (e, url) {
             if (type === "game" || type === "shop") {
                 return;
@@ -253,29 +260,34 @@ class Client {
                 //if (new URL(url).search === "?action=internalMapRevolution") {
                 client.createWindow("game", url)
             }
+
+            //check allowed links
+            if (allowedLinks.includes(new URL(url).href)) {
+                client.createWindow("client", url)
+            }
             /*else if (new URL(url).host.split(".")[1] === "darkorbit") {
-                           if (new URL(url).host.split(".")[0].search("board") !== -1 || new URL(url).search === "?action=portal.redirectToBoard") {
-                               client.createWindow("board", url)
-                           } else if (new URL(url).search.split("&")[0] === "?action=internalPaymentProxy") {
-                               client.createWindow("shop", url);
-                           } else {
-                               if (new URL(url).search.split("&")[0] === "?action=externalLogout") {
-                                   if (settings.getSync().Settings.PreventCloseSessionWindow) {
-                                       return window.loadURL(mainLink, { userAgent: this.useragent });
-                                   } else {
-                                       return window.close();
-                                   }
-                               } else if (new URL(url).host.split(".")[1] === "darkorbit") {
-                                   return window.loadURL(url, { userAgent: client.useragent });
-                               }
-                               client.createWindow("client", url);
-                           }
-                       } else if (new URL(url).host.split(".")[1] === "bpsecure") {
-                           client.createWindow("config", url);
-                       } else {
-                           require('open')(url);
-                           return;
-                       }*/
+                if (new URL(url).host.split(".")[0].search("board") !== -1 || new URL(url).search === "?action=portal.redirectToBoard") {
+                    client.createWindow("board", url)
+                } else if (new URL(url).search.split("&")[0] === "?action=internalPaymentProxy") {
+                    client.createWindow("shop", url);
+                } else {
+                    if (new URL(url).search.split("&")[0] === "?action=externalLogout") {
+                        if (settings.getSync().Settings.PreventCloseSessionWindow) {
+                            return window.loadURL(mainLink, { userAgent: this.useragent });
+                        } else {
+                            return window.close();
+                        }
+                    } else if (new URL(url).host.split(".")[1] === "darkorbit") {
+                        return window.loadURL(url, { userAgent: client.useragent });
+                    }
+                    client.createWindow("client", url);
+                }
+            } else if (new URL(url).host.split(".")[1] === "bpsecure") {
+                client.createWindow("config", url);
+            } else {
+                require('open')(url);
+                return;
+            }*/
         });
 
         return window;
